@@ -55,5 +55,4 @@ jobs:
         run: |
           # update values if necessary then deploy
           oc project santiago-parraga-2-dev
-          oc policy add-role-to-user edit system:serviceaccount:santiago-parraga-2-dev:cicd-serviceaccount -n santiago-parraga-2-dev
           helm upgrade --install myapp charts/myapp --namespace ${{ secrets.OPENSHIFT_PROJECT }} --create-namespace

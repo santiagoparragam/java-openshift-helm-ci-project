@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.postgres.pvc_name }} 
   labels:
-    app: myapp
+    app: {{ .Release.Name }}
 spec:
   accessModes:
     - {{ .Values.postgres.pvc.accessMode }} 
