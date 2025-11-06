@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"/><title>Microservices Demo</title></head>
+  <body>
+    <h1>Microservices Demo</h1>
+    <p id="msg">Click the button to call microservice A</p>
+    <button id="btn">Call A → B → DB</button>
+    <pre id="out"></pre>
+    <script>
+      document.getElementById('btn').onclick = async () => {
+        const out = document.getElementById('out');
+        out.textContent = 'Calling...';
+        try {
+          const resp = await fetch('/api/a');
+          const txt = await resp.text();
+          out.textContent = txt;
+        } catch (e) {
+          out.textContent = 'Error: ' + e;
+        }
+      }
+    </script>
+  </body>
+</html>

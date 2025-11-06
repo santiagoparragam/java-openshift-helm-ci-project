@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-a
+spec:
+  selector:
+    app: microservice-a
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.microserviceA.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-b
+spec:
+  selector:
+    app: microservice-b
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.microserviceB.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: html-server
+spec:
+  selector:
+    app: html-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.htmlServer.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

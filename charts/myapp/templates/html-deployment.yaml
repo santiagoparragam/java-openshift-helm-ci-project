@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: html-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: html-server
+  template:
+    metadata:
+      labels:
+        app: html-server
+    spec:
+      containers:
+        - name: html-server
+          image: {{ .Values.htmlServer.image | quote }}
+          ports:
+            - containerPort: {{ .Values.htmlServer.port }}

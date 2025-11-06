@@ -1,0 +1,50 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build microservice-a
+        run: |
+          cd microservice-a
+          mvn -DskipTests package
+      - name: Build microservice-b
+        run: |
+          cd microservice-b
+          mvn -DskipTests package
+      - name: Login to registry
+        env:
+          REGISTRY: ${{ secrets.REGISTRY_URL }}
+          REG_USER: ${{ secrets.REG_USER }}
+          REG_PASS: ${{ secrets.REG_PASS }}
+        run: |
+          echo "$REG_PASS" | docker login $REGISTRY -u "$REG_USER" --password-stdin
+      - name: Build and push images
+        env:
+          REGISTRY: ${{ secrets.REGISTRY_URL }}
+        run: |
+          docker build -t $REGISTRY/microservicea:1 microservice-a
+          docker push $REGISTRY/microservicea:1
+          docker build -t $REGISTRY/microserviceb:1 microservice-b
+          docker push $REGISTRY/microserviceb:1
+          docker build -t $REGISTRY/htmlserver:1 html-server
+          docker push $REGISTRY/htmlserver:1
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+      - name: Deploy with Helm
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          REGISTRY: ${{ secrets.REGISTRY_URL }}
+        run: |
+          # update values if necessary then deploy
+          helm upgrade --install myapp charts/myapp --namespace ${{ secrets.OPENSHIFT_PROJECT }} --create-namespace
