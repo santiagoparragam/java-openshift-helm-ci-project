@@ -22,4 +22,4 @@ postgres:
   pvc:
     size: 5Gi
     accessMode: ReadWriteOnce
-    storageClassName: standard
+    storageClassName: gp3
