@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.postgres.pvc_name }} 
+  labels:
+    app: myapp
+spec:
+  accessModes:
+    - {{ .Values.postgres.pvc.accessMode }} 
+
+  storageClassName: {{ .Values.postgres.pvc.storageClassName }} 
+
+  resources:
+    requests:
+      storage: {{ .Values.postgres.pvc.size }} # e.g., "5Gi"
