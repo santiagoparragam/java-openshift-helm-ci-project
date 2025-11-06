@@ -44,7 +44,6 @@ jobs:
           curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz | tar xz
           sudo mv oc /usr/local/bin/
           oc version
-          oc project santiago-parraga-2-dev
       - name: Log in Openshift
         uses: redhat-actions/oc-login@v1
         with:
