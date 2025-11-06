@@ -39,12 +39,14 @@ jobs:
           docker push santiagoparraga/microserviceb:${{ github.run_number }}
           docker build -t santiagoparraga/htmlserver:${{ github.run_number }} html-server
           docker push santiagoparraga/htmlserver:${{ github.run_number }}
+      - name: Log in Openshift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: https://api.rm3.7wse.p1.openshiftapps.com:6443
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
       - name: Setup Helm
         uses: azure/setup-helm@v3
       - name: Deploy with Helm
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-          REGISTRY: ${{ secrets.REGISTRY_URL }}
         run: |
           # update values if necessary then deploy
           helm upgrade --install myapp charts/myapp --namespace ${{ secrets.OPENSHIFT_PROJECT }} --create-namespace
