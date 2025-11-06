@@ -33,7 +33,7 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY_URL }}
         run: |
-          docker build -t $REGISTRY/microservicea:1
+          docker build -t $REGISTRY/microservicea:1 ./microservice-a
           docker push $REGISTRY/microservicea:1
           docker build -t $REGISTRY/microserviceb:1
           docker push $REGISTRY/microserviceb:1
