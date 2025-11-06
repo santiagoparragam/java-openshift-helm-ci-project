@@ -55,4 +55,4 @@ jobs:
         run: |
           # update values if necessary then deploy
           oc project santiago-parraga-2-dev
-          helm upgrade --install myapp charts/myapp --n ${{ secrets.OPENSHIFT_PROJECT }}
+          helm upgrade --install myapp charts/myapp -n ${{ secrets.OPENSHIFT_PROJECT }}
