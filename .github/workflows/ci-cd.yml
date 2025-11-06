@@ -33,11 +33,11 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY_URL }}
         run: |
-          docker build . -t santiagoparraga/microservicea:1 ./microservice-a
+          docker build -t santiagoparraga/microservicea:1 microservice-a
           docker push santiagoparraga/microservicea:1
-          docker build . -t santiagoparraga/microserviceb:1 ./microservice-b
+          docker build -t santiagoparraga/microserviceb:1 microservice-b
           docker push santiagoparraga/microserviceb:1
-          docker build . -t santiagoparraga/htmlserver:1 ./html-server
+          docker build -t santiagoparraga/htmlserver:1 html-server
           docker push santiagoparraga/htmlserver:1
       - name: Setup Helm
         uses: azure/setup-helm@v3
