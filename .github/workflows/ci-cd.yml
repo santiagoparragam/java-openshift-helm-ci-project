@@ -33,8 +33,12 @@ jobs:
         env:
           REGISTRY: ${{ secrets.REGISTRY_URL }}
         run: |
-          docker build -t santiagoparraga/htmlserver:2 html-server
-          docker push santiagoparraga/htmlserver:2
+          docker build -t santiagoparraga/microservicea:${{ github.run_number }} microservice-a
+          docker push santiagoparraga/microservicea:${{ github.run_number }}
+          docker build -t santiagoparraga/microserviceb:${{ github.run_number }} microservice-b
+          docker push santiagoparraga/microserviceb:${{ github.run_number }}
+          docker build -t santiagoparraga/htmlserver:${{ github.run_number }} html-server
+          docker push santiagoparraga/htmlserver:${{ github.run_number }}
       - name: Setup Helm
         uses: azure/setup-helm@v3
       - name: Deploy with Helm
