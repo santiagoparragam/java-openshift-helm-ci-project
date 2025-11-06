@@ -28,7 +28,7 @@ jobs:
           REG_USER: ${{ secrets.REG_USER }}
           REG_PASS: ${{ secrets.REG_PASS }}
         run: |
-          echo "$REG_PASS" | docker login $REGISTRY -u "$REG_USER" --password-stdin
+          echo "$REG_PASS" | docker login -u "$REG_USER" --password-stdin
       - name: Build and push images
         env:
           REGISTRY: ${{ secrets.REGISTRY_URL }}
