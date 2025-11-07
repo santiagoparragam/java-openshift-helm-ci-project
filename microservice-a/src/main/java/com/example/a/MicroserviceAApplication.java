@@ -14,15 +14,16 @@ public class MicroserviceAApplication {
         SpringApplication.run(MicroserviceAApplication.class, args);
     }
 }
-
+//http://microservice-b:8081
 @RestController
 class AController {
     private final RestTemplate rest = new RestTemplate();
-    @Value("${microservice.b.url:http://microservice-b:8081}")
+    @Value("${microservice.b.url:http://microservice-b.santiago-parraga-2-dev.svc.cluster.local:8081}")
     private String bUrl;
 
     @GetMapping("/api/a")
     public String callB() {
+    System.out.println("IN SERVICE A:::");
         ResponseEntity<String> r = rest.getForEntity(bUrl + "/api/b", String.class);
         return "A -> B responded: " + r.getBody();
     }

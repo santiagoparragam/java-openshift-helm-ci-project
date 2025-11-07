@@ -22,6 +22,7 @@ class BController {
 
     @GetMapping("/api/b")
     public String get() {
+        System.out.println("IN SERVICE B:::");
         List<Person> all = repo.findAll();
         return "B: persons=" + all.size();
     }
