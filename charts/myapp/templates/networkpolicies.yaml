@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-a-to-b
+  namespace: santiago-parraga-2-dev
 spec:
   podSelector:
     matchLabels:
@@ -21,6 +22,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-b-to-postgres
+  namespace: santiago-parraga-2-dev
 spec:
   podSelector:
     matchLabels:
@@ -35,3 +37,23 @@ spec:
       ports:
         - protocol: TCP
           port: 5432
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-micro-a
+  namespace: santiago-parraga-2-dev
+spec:
+  podSelector:
+    matchLabels:
+      app: microservice-a  # Aplica esta política a los pods etiquetados como micro-b
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+      ports:
+        - protocol: TCP
+          port: {{ .Values.microserviceA.port }}  # Puerto de destino en micro-b (ajústalo según tu app)
