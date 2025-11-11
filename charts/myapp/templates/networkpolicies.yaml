@@ -17,9 +17,9 @@ spec:
             podSelector:
               matchLabels:
               app: microservice-a
-      ports:
-        - protocol: TCP
-          port: {{ .Values.microserviceB.port }}
+            ports:
+            - protocol: TCP
+              port: {{ .Values.microserviceB.port }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
