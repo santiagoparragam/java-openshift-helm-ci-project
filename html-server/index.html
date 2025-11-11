@@ -11,7 +11,7 @@
         const out = document.getElementById('out');
         out.textContent = 'Calling...';
         try {
-          const resp = await fetch('http://microservice-a.santiago-parraga-2-dev.svc.cluster.local:8080/api/a');
+          const resp = await fetch('/api/a');
           const txt = await resp.text();
           out.textContent = txt;
         } catch (e) {
