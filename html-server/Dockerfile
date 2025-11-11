@@ -1,10 +1,14 @@
 FROM nginx:alpine
 
-# Remove the default config and replace with our version
+# Copy configuration and HTML
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /usr/share/nginx/html/index.html
 
-# Use non-root user compatible with OpenShift
+# Create temp directories and set full permissions for non-root user
+RUN mkdir -p /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp \
+    && chmod -R 777 /tmp \
+    && chmod -R 777 /var/cache/nginx /var/run /var/log/nginx
+
 USER 1001
 
 EXPOSE 8080
