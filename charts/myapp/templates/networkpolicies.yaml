@@ -1,3 +1,32 @@
+{{- /*
+NetworkPolicies for microservice-a, microservice-b and Postgres
+This file defines secure, namespace-scoped rules.
+*/ -}}
+
+# Allow ingress from OpenShift routers (external access) to microservice-a
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-micro-a
+  namespace: santiago-parraga-2-dev
+spec:
+  podSelector:
+    matchLabels:
+      app: microservice-a
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+      ports:
+        - protocol: TCP
+          port: {{ .Values.microserviceA.port }}
+
+---
+
+# Allow microservice-a to call microservice-b
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -11,16 +40,19 @@ spec:
     - Ingress
   ingress:
     - from:
-    	- namespaceSelector:
+        - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: santiago-parraga-2-dev
-            podSelector:
-              matchLabels:
+          podSelector:
+            matchLabels:
               app: microservice-a
-            ports:
-            - protocol: TCP
-              port: {{ .Values.microserviceB.port }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.microserviceB.port }}
+
 ---
+
+# Allow microservice-b to connect to Postgres
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -34,29 +66,13 @@ spec:
     - Ingress
   ingress:
     - from:
-        - podSelector:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: santiago-parraga-2-dev
+          podSelector:
             matchLabels:
               app: microservice-b
       ports:
         - protocol: TCP
           port: 5432
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-ingress-to-micro-a
-  namespace: santiago-parraga-2-dev
-spec:
-  podSelector:
-    matchLabels:
-      app: microservice-a  # Aplica esta política a los pods etiquetados como micro-b
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              network.openshift.io/policy-group: ingress
-      ports:
-        - protocol: TCP
-          port: {{ .Values.microserviceA.port }}  # Puerto de destino en micro-b (ajústalo según tu app)
+
