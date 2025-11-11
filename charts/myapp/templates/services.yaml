@@ -7,7 +7,7 @@ spec:
     app: microservice-a
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: {{ .Values.microserviceA.port }}
 ---
 apiVersion: v1
@@ -19,7 +19,7 @@ spec:
     app: microservice-b
   ports:
     - protocol: TCP
-      port: 80
+      port: 8081
       targetPort: {{ .Values.microserviceB.port }}
 ---
 apiVersion: v1
