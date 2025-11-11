@@ -1,7 +1,11 @@
 FROM nginx:alpine
-USER root
-RUN mkdir -p /var/cache/nginx /var/run /var/log/nginx \
-    && chmod -R 777 /var/cache/nginx /var/run /var/log/nginx
-USER 1001
+
+# Remove the default config and replace with our version
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /usr/share/nginx/html/index.html
-EXPOSE 80
+
+# Use non-root user compatible with OpenShift
+USER 1001
+
+EXPOSE 8080
+
