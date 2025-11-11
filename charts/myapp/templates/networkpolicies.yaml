@@ -11,6 +11,9 @@ spec:
     - Ingress
   ingress:
     - from:
+    	- namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: santiago-parraga-2-dev
         - podSelector:
             matchLabels:
               app: microservice-a
