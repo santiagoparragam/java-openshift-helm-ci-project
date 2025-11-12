@@ -22,7 +22,7 @@ public class MicroserviceBApplication {
 
 @RestController
 @RequestMapping("/api/b")
-public class BController {
+class BController {
 
     private final RecordRepository repository;
 

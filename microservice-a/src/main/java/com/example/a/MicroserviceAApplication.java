@@ -25,7 +25,7 @@ public class MicroserviceAApplication {
 
 @RestController
 @RequestMapping("/api/a")
-public class AController {
+class AController {
 
     private final RestTemplate restTemplate;
 
