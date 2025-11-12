@@ -34,7 +34,7 @@ class BController {
     @GetMapping
     public String getData() {
         System.out.println("IN SERVICE B get:::");
-        List<Person> all = repo.findAll();
+        List<Person> all = repository.findAll();
         return "B: persons=" + all.size();;
     }
 
