@@ -1,14 +1,30 @@
 <!doctype html>
 <html>
-  <head><meta charset="utf-8"/><title>Microservices Demo</title></head>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Microservices Demo</title>
+  </head>
   <body>
     <h1>Microservices Demo</h1>
-    <p id="msg">Click the button to call microservice A</p>
-    <button id="btn">Call A → B → DB</button>
-    <pre id="out"></pre>
+
+    <h3>GET Chain (A → B → DB)</h3>
+    <button id="btn-get">Call A → B → DB</button>
+    <pre id="out-get"></pre>
+
+    <hr/>
+
+    <h3>POST Insert (A → B → DB)</h3>
+    <form id="insertForm">
+      <label>Name: <input id="name" /></label><br/>
+      <label>Value: <input id="value" /></label><br/>
+      <button type="submit">Insert</button>
+    </form>
+    <pre id="out-insert"></pre>
+
     <script>
-      document.getElementById('btn').onclick = async () => {
-        const out = document.getElementById('out');
+      // --- GET operation ---
+      document.getElementById('btn-get').onclick = async () => {
+        const out = document.getElementById('out-get');
         out.textContent = 'Calling...';
         try {
           const resp = await fetch('/api/a');
@@ -17,7 +33,29 @@
         } catch (e) {
           out.textContent = 'Error: ' + e;
         }
-      }
+      };
+
+      // --- POST insert operation ---
+      document.getElementById('insertForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const out = document.getElementById('out-insert');
+        out.textContent = 'Inserting...';
+        const name = document.getElementById('name').value;
+        const value = document.getElementById('value').value;
+
+        try {
+          const resp = await fetch('/api/a/insert', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, value })
+          });
+          const txt = await resp.text();
+          out.textContent = txt;
+        } catch (e) {
+          out.textContent = 'Error: ' + e;
+        }
+      };
     </script>
   </body>
 </html>
+
