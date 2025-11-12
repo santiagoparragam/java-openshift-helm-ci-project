@@ -5,13 +5,13 @@ image:
 service:
   type: ClusterIP
 microserviceA:
-  image: "santiagoparraga/microservicea:49"
+  image: "santiagoparraga/microservicea:51"
   port: 8080
 microserviceB:
-  image: "santiagoparraga/microserviceb:49"
+  image: "santiagoparraga/microserviceb:51"
   port: 8081
 htmlServer:
-  image: "santiagoparraga/htmlserver:49"
+  image: "santiagoparraga/htmlserver:51"
   port: 8080
 postgres:
   image: postgres:15
