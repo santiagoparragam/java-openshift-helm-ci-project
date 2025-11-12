@@ -13,11 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Map;
 import java.lang.System;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean; // <--- NEW IMPORT
+import org.springframework.web.client.RestTemplate;
 
 
 
 @SpringBootApplication
 public class MicroserviceAApplication {
+
+@Bean
+    public RestTemplate restTemplate() {
+        // Spring will execute this method, take the returned object, 
+        // and register it as a bean in the IoC container.
+        return new RestTemplate();
+    }
     public static void main(String[] args) {
         SpringApplication.run(MicroserviceAApplication.class, args);
     }
