@@ -22,7 +22,7 @@
     <pre id="out-insert"></pre>
 
     <script>
-      // --- GET operation ---
+      // --- GET operation ---<label>Value: <input id="value" /></label><br/>
       document.getElementById('btn-get').onclick = async () => {
         const out = document.getElementById('out-get');
         out.textContent = 'Calling...';
@@ -41,13 +41,13 @@
         const out = document.getElementById('out-insert');
         out.textContent = 'Inserting...';
         const name = document.getElementById('name').value;
-       // const value = document.getElementById('value').value;
+        //const value = document.getElementById('value').value;
 
         try {
           const resp = await fetch('/api/a/insert', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, value })
+            body: JSON.stringify({ name })
           });
           const txt = await resp.text();
           out.textContent = txt;
