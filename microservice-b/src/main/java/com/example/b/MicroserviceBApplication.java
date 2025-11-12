@@ -13,16 +13,21 @@ import java.lang.System;
 
 import java.util.List;
 
-
+@SpringBootApplication
+public class MicroserviceBApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MicroserviceBApplication.class, args);
+    }
+}
 
 @RestController
 @RequestMapping("/api/b")
-public class MicroserviceBApplication {
+public class BController {
 
     private final RecordRepository repository;
 
     @Autowired
-    public MicroserviceBApplication(RecordRepository repository) {
+    public BController(RecordRepository repository) {
         this.repository = repository;
     }
 

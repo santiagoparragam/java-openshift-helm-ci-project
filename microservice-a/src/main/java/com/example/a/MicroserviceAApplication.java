@@ -16,15 +16,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+@SpringBootApplication
+public class MicroserviceAApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MicroserviceAApplication.class, args);
+    }
+}
 
 @RestController
 @RequestMapping("/api/a")
-public class MicroserviceAApplication {
+public class AController {
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public MicroserviceAApplication(RestTemplate restTemplate) {
+    public AControllerm(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
