@@ -30,7 +30,7 @@ public class AController {
     private final RestTemplate restTemplate;
 
     @Autowired
-    public AControllerm(RestTemplate restTemplate) {
+    public AController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
