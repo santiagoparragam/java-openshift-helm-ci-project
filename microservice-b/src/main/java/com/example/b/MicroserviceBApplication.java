@@ -35,7 +35,7 @@ class BController {
     public String getData() {
         System.out.println("IN SERVICE B get:::");
         List<Person> all = repository.findAll();
-        return "B: persons=" + all.size();;
+        return "B: persons=" + all.size();
     }
 
     @PostMapping("/insert")
